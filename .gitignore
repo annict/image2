@@ -1,0 +1,5 @@
+.DS_Store
+
+/.vagrant
+/group_vars/development
+/development

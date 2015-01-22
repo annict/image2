@@ -1,0 +1,4 @@
+---
+s3_bucket_name: image2
+nginx_version: 1.7.9
+ngx_small_light_version: 0.6.4

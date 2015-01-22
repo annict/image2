@@ -1,0 +1,47 @@
+- name: 必要そうなパッケージをインストールする
+  apt:
+    pkg:   '{{ item }}'
+    state: installed
+  with_items:
+    - libpcre3          # Nginxのlocationディレクティブで正規表現を使用するために必要
+    - libpcre3-dev      # Nginxのlocationディレクティブで正規表現を使用するために必要
+    - libmagickwand-dev # ngx_small_lightの `setup` スクリプトを実行するために必要
+
+- name: Nginxのソースコードをダウンロードする
+  shell: curl -L http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz > /tmp/nginx-{{ nginx_version }}.tar.gz
+
+- name: ngx_small_lightのソースコードをダウンロードする
+  shell: curl -L https://github.com/cubicdaiya/ngx_small_light/archive/v{{ ngx_small_light_version }}.tar.gz > /tmp/ngx_small_light-{{ ngx_small_light_version }}.tar.gz
+
+- name: ngx_small_lightのセットアップを行う
+  shell: >
+    cd /tmp &&
+    tar zxf ngx_small_light-{{ ngx_small_light_version }}.tar.gz &&
+    cd /tmp/ngx_small_light-{{ ngx_small_light_version }} &&
+    ./setup
+
+- name: Nginxをインストールする
+  shell: >
+    cd /tmp &&
+    tar zxf nginx-{{ nginx_version }}.tar.gz &&
+    cd /tmp/nginx-{{ nginx_version }} &&
+    ./configure \
+      --prefix=/opt/nginx \
+      --conf-path=/etc/nginx/nginx.conf \
+      --sbin-path=/opt/nginx/sbin/nginx \
+      --with-http_stub_status_module \
+      --with-pcre \
+      --add-module=/tmp/ngx_small_light-{{ ngx_small_light_version }} && \
+    make &&
+    make install
+
+- name: ダウンロードしたファイルを削除する
+  shell: rm -rf /tmp/*
+
+- name: Nginxの設定ファイルを更新する
+  template:
+    src:  nginx.conf
+    dest: /etc/nginx/nginx.conf
+
+- name: ログファイルを格納するディレクトリを作成する
+  shell: mkdir /var/log/nginx

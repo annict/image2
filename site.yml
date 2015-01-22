@@ -1,0 +1,8 @@
+---
+- hosts: all
+  user:  root
+  roles:
+    - apt
+    - swap_file
+    - imagemagick
+    - ngx_small_light

@@ -1,0 +1,4 @@
+- name: imagemagickをインストールする
+  apt:
+    name:  imagemagick
+    state: present
