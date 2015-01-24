@@ -1,4 +1,5 @@
 ---
 s3_bucket_name: image2
+mackerel_api_key: mackerel-api-key
 nginx_version: 1.7.9
 ngx_small_light_version: 0.6.4
