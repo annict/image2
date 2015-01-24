@@ -2,4 +2,6 @@
 
 /.vagrant
 /group_vars/development
+/group_vars/production
 /development
+/production
