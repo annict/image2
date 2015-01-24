@@ -28,6 +28,6 @@ $ ansible-playbook -i development site.yml
 
 ```
 http://192.168.33.11/350x200/ald.png
-http://192.168.33.11/350x200c/ald.png
+http://192.168.33.11/350x200e/ald.png
 http://192.168.33.11/350x200/ald.png?blur=0x5
 ```
