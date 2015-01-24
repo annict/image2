@@ -10,6 +10,7 @@
 * ImageMagick
 * Nginx
 * ngx_small_light
+* Mackerel
 
 
 ## 動かし方
